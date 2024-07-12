@@ -35,7 +35,7 @@ const BridgeBox = () => {
       setQuoteLoading(true);
       await axios
         .post(
-          `${process.env.BRIDGE_API_BASE_URL}/api/quote?srcChainId=${srctokenInfo.chainId}&srcQuoteTokenAddress=${srctokenInfo.address}&srcQuoteTokenAmount=${tokenAmount}&dstChainId=${dsttokenInfo.chainId}&dstQuoteTokenAddress=${dsttokenInfo.address}&slippage=1`
+          `${process.env.NEXT_PUBLIC_BRIDGE_API_BASE_URL}/quote?srcChainId=${srctokenInfo.chainId}&srcQuoteTokenAddress=${srctokenInfo.address}&srcQuoteTokenAmount=${tokenAmount}&dstChainId=${dsttokenInfo.chainId}&dstQuoteTokenAddress=${dsttokenInfo.address}&slippage=1`
         )
         .then((res) => {
           const route = res.data.routes[0];
@@ -74,7 +74,7 @@ const BridgeBox = () => {
       setTranLoading(true);
       await axios
         .post(
-          `${process.env.BRIDGE_API_BASE_URL}/api/buildTx?srcChainId=${quoteInfo.srcChainId}&srcQuoteTokenAddress=${quoteInfo.srcQuoteTokenAddress}&srcQuoteTokenAmount=${quoteInfo.srcQuoteTokenAmount}&dstChainId=${quoteInfo.dstChainId}&dstQuoteTokenAddress=${quoteInfo.dstQuoteTokenAddress}&slippage=${quoteInfo.slippage}&receiver=${quoteInfo.receiver}&bridgeProvider=${quoteInfo.bridgeProvider}&srcBridgeTokenAddress=${quoteInfo.srcBridgeTokenAddress}&dstBridgeTokenAddress=${quoteInfo.dstBridgeTokenAddress}&srcSwapProvider=${quoteInfo.srcSwapProvider}&dstSwapProvider=${quoteInfo.dstSwapProvider}`
+          `${process.env.NEXT_PUBLIC_BRIDGE_API_BASE_URL}/buildTx?srcChainId=${quoteInfo.srcChainId}&srcQuoteTokenAddress=${quoteInfo.srcQuoteTokenAddress}&srcQuoteTokenAmount=${quoteInfo.srcQuoteTokenAmount}&dstChainId=${quoteInfo.dstChainId}&dstQuoteTokenAddress=${quoteInfo.dstQuoteTokenAddress}&slippage=${quoteInfo.slippage}&receiver=${quoteInfo.receiver}&bridgeProvider=${quoteInfo.bridgeProvider}&srcBridgeTokenAddress=${quoteInfo.srcBridgeTokenAddress}&dstBridgeTokenAddress=${quoteInfo.dstBridgeTokenAddress}&srcSwapProvider=${quoteInfo.srcSwapProvider}&dstSwapProvider=${quoteInfo.dstSwapProvider}`
         )
         .then((res) => {
           setTranLoading(false);

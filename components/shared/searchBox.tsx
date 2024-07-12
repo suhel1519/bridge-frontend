@@ -25,7 +25,7 @@ const SearchBox = ({ label, setTokenInfo }: props) => {
     setLoading(true);
     await axios
       .get(
-        `${process.env.BRIDGE_API_BASE_URL}/api/recommendedTokens?id=${value}`
+        `${process.env.NEXT_PUBLIC_BRIDGE_API_BASE_URL}/recommendedTokens?id=${value}`
       )
       .then((res) => {
         setLoading(false);
