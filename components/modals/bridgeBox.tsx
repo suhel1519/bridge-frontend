@@ -35,7 +35,7 @@ const BridgeBox = () => {
       setQuoteLoading(true);
       await axios
         .post(
-          `/api/quote?srcChainId=${srctokenInfo.chainId}&srcQuoteTokenAddress=${srctokenInfo.address}&srcQuoteTokenAmount=${tokenAmount}&dstChainId=${dsttokenInfo.chainId}&dstQuoteTokenAddress=${dsttokenInfo.address}&slippage=1`
+          `${process.env.BRIDGE_API_BASE_URL}/quote?srcChainId=${srctokenInfo.chainId}&srcQuoteTokenAddress=${srctokenInfo.address}&srcQuoteTokenAmount=${tokenAmount}&dstChainId=${dsttokenInfo.chainId}&dstQuoteTokenAddress=${dsttokenInfo.address}&slippage=1`
         )
         .then((res) => {
           const route = res.data.routes[0];
@@ -70,23 +70,18 @@ const BridgeBox = () => {
   };
 
   const proceedTransaction = async () => {
-    console.log("srctokenInfo", srctokenInfo);
-    console.log("dsttokenInfo", dsttokenInfo);
     if (srctokenInfo && dsttokenInfo) {
-      console.log("inside if condi");
       setTranLoading(true);
       await axios
         .post(
-          `/api/buildTx?srcChainId=${quoteInfo.srcChainId}&srcQuoteTokenAddress=${quoteInfo.srcQuoteTokenAddress}&srcQuoteTokenAmount=${quoteInfo.srcQuoteTokenAmount}&dstChainId=${quoteInfo.dstChainId}&dstQuoteTokenAddress=${quoteInfo.dstQuoteTokenAddress}&slippage=${quoteInfo.slippage}&receiver=${quoteInfo.receiver}&bridgeProvider=${quoteInfo.bridgeProvider}&srcBridgeTokenAddress=${quoteInfo.srcBridgeTokenAddress}&dstBridgeTokenAddress=${quoteInfo.dstBridgeTokenAddress}&srcSwapProvider=${quoteInfo.srcSwapProvider}&dstSwapProvider=${quoteInfo.dstSwapProvider}`
+          `${process.env.BRIDGE_API_BASE_URL}/buildTx?srcChainId=${quoteInfo.srcChainId}&srcQuoteTokenAddress=${quoteInfo.srcQuoteTokenAddress}&srcQuoteTokenAmount=${quoteInfo.srcQuoteTokenAmount}&dstChainId=${quoteInfo.dstChainId}&dstQuoteTokenAddress=${quoteInfo.dstQuoteTokenAddress}&slippage=${quoteInfo.slippage}&receiver=${quoteInfo.receiver}&bridgeProvider=${quoteInfo.bridgeProvider}&srcBridgeTokenAddress=${quoteInfo.srcBridgeTokenAddress}&dstBridgeTokenAddress=${quoteInfo.dstBridgeTokenAddress}&srcSwapProvider=${quoteInfo.srcSwapProvider}&dstSwapProvider=${quoteInfo.dstSwapProvider}`
         )
         .then((res) => {
-          console.log("inside then");
           setTranLoading(false);
           const route = res.data.route;
           setTranParam(route);
         })
         .catch((err) => {
-          console.log("inside catch");
           setTranLoading(false);
           console.log(err);
         });

@@ -24,7 +24,7 @@ const SearchBox = ({ label, setTokenInfo }: props) => {
   const fetchData = async (value: string) => {
     setLoading(true);
     await axios
-      .get(`/api/recommendedTokens?id=${value}`)
+      .get(`${process.env.BRIDGE_API_BASE_URL}/recommendedTokens?id=${value}`)
       .then((res) => {
         setLoading(false);
         setTokens(res.data.recommendedTokens);
