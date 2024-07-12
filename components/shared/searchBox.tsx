@@ -22,6 +22,11 @@ const SearchBox = ({ label, setTokenInfo }: props) => {
   const [loading, setLoading] = useState<boolean>(false);
 
   const fetchData = async (value: string) => {
+    // console.log(
+    //   "NEXT_PUBLIC_BRIDGE_API_BASE_URL",
+    //   process.env.NEXT_PUBLIC_BRIDGE_API_BASE_URL
+    // );
+
     setLoading(true);
     await axios
       .get(

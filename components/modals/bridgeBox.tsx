@@ -70,7 +70,7 @@ const BridgeBox = () => {
   };
 
   const proceedTransaction = async () => {
-    if (srctokenInfo && dsttokenInfo) {
+    if (srctokenInfo && dsttokenInfo && quoteInfo) {
       setTranLoading(true);
       await axios
         .post(
@@ -79,7 +79,17 @@ const BridgeBox = () => {
         .then((res) => {
           setTranLoading(false);
           const route = res.data.route;
-          setTranParam(route);
+          const srcQuoteTokenUsdValue = parseFloat(
+            route.srcQuoteTokenUsdValue
+          ).toFixed(2);
+          const dstQuoteTokenUsdValue = parseFloat(
+            route.dstQuoteTokenUsdValue
+          ).toFixed(2);
+          // console.table([srcQuoteTokenUsdValue, dstQuoteTokenUsdValue]);
+          setTranParam({
+            srcQuoteTokenUsdValue: srcQuoteTokenUsdValue,
+            dstQuoteTokenUsdValue: dstQuoteTokenUsdValue,
+          });
         })
         .catch((err) => {
           setTranLoading(false);
@@ -207,30 +217,29 @@ const BridgeBox = () => {
       >
         {tranLoading ? <Spinner /> : <div>Proceed to Bridge</div>}
       </button>
-      {tranLoading && (
-        <div className="flex items-start justify-between">
-          <div className="text-xs flex flex-col gap-2">
-            <h3>Source Quote USD</h3>
-            <div>
-              {tranLoading ? (
-                <SingleLineLoading />
-              ) : (
-                tranParam?.srcQuoteTokenUsdValue
-              )}
-            </div>
-          </div>
-          <div className="text-xs flex flex-col gap-2">
-            <h3>Destination Quote USD</h3>
-            <div>
-              {tranLoading ? (
-                <SingleLineLoading />
-              ) : (
-                tranParam?.dstQuoteTokenUsdValue
-              )}
-            </div>
+
+      <div className="flex items-start justify-between">
+        <div className="text-xs flex flex-col gap-2">
+          <h3>Source Quote USD</h3>
+          <div>
+            {tranLoading ? (
+              <SingleLineLoading />
+            ) : (
+              tranParam?.srcQuoteTokenUsdValue
+            )}
           </div>
         </div>
-      )}
+        <div className="text-xs flex flex-col gap-2">
+          <h3>Destination Quote USD</h3>
+          <div>
+            {tranLoading ? (
+              <SingleLineLoading />
+            ) : (
+              tranParam?.dstQuoteTokenUsdValue
+            )}
+          </div>
+        </div>
+      </div>
     </div>
   );
 };
